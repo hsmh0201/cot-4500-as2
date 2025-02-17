@@ -88,7 +88,7 @@ def hermite_divided_difference(x, y, y_deriv):
     z = np.zeros(2 * n)
     Q = np.zeros((2 * n, 2 * n))
 
-# table with functions and derivatives given 
+    # table with functions and derivatives given
     for i in range(n):
         z[2 * i] = x[i]
         z[2 * i + 1] = x[i]
@@ -99,7 +99,7 @@ def hermite_divided_difference(x, y, y_deriv):
         if i > 0:
             Q[2 * i, 1] = (Q[2 * i, 0] - Q[2 * i - 1, 0]) / (z[2 * i] - z[2 * i - 1])
 
-# compute divided differences
+    # compute divided differences
     for j in range(2, 2 * n):
         for i in range(2 * n - j):
             Q[i, j] = (Q[i + 1, j - 1] - Q[i, j - 1]) / (z[i + j] - z[i])
@@ -110,19 +110,17 @@ x_values = [3.6, 3.8, 3.9]
 y_values = [1.675, 1.436, 1.318]
 y_deriv_values = [-1.195, -1.188, -1.182]
 
-# compute hermite table
+# compute Hermite table
 z, Q = hermite_divided_difference(x_values, y_values, y_deriv_values)
 
-np.set_printoptions(precision=10, suppress=True)
+np.set_printoptions(precision=10, suppress=False)  # scientific notation for small numbers
 
-# print hermite table
+# print hermite table 
 for i in range(len(z)):
-    formatted_row = f"{z[i]:.7f} " + " ".join(
-        f"{num:.10e}" if abs(num) < 1e-2 else f"{num:.7f}" for num in Q[i]
+    formatted_row = f"{z[i]:.10e} " + " ".join(
+        f"{num:.10e}" for num in Q[i]
     )
     print(f"[ {formatted_row} ]")
-
-print()
 
 
 # Question 5 : Cubic spline interpolation
